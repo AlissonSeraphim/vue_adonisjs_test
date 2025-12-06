@@ -1,6 +1,6 @@
-# Backend - Teste Fullstack Incuca
+# Backend - Fullstack Vue + AdonisJS
 
-API REST desenvolvida com **AdonisJS 6** para o desafio técnico Incuca.
+API REST desenvolvida com **AdonisJS 6**.
 
 ## Início Rápido com Docker
 
