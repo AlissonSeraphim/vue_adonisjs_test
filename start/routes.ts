@@ -20,6 +20,7 @@ router.group(() => {
     router.post('/login', [AuthController, 'login'])
     router.post('/logout', [AuthController, 'logout']).use(middleware.auth({ guards: ['api'] }))
     router.get('/me', [AuthController, 'me']).use(middleware.auth({ guards: ['api'] }))
+    router.get('/session', [AuthController, 'session'])
   }).prefix('/auth')
 
   // Jokes routes (protected)

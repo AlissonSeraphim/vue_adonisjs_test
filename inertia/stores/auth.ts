@@ -8,18 +8,38 @@ interface User {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(localStorage.getItem('token'))
+  const token = ref<string | null>(null)
   const user = ref<User | null>(null)
+  const initialized = ref(false)
 
   const isAuthenticated = computed(() => !!token.value)
 
-  // Initialize user from localStorage
-  const storedUser = localStorage.getItem('user')
-  if (storedUser) {
+  /**
+   * Initialize auth state from server session
+   * This is called on app startup to restore session
+   */
+  async function initFromSession() {
+    if (initialized.value) return
+
     try {
-      user.value = JSON.parse(storedUser)
+      const response = await fetch('/api/auth/session', {
+        headers: {
+          'Accept': 'application/json',
+        },
+        credentials: 'include', // Important: include cookies for session
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data.authenticated) {
+          token.value = data.token
+          user.value = data.user
+        }
+      }
     } catch {
-      localStorage.removeItem('user')
+      // Session not available, user needs to login
+    } finally {
+      initialized.value = true
     }
   }
 
@@ -30,6 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      credentials: 'include', // Important: include cookies for session
       body: JSON.stringify({ email, password }),
     })
 
@@ -42,10 +63,6 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = data.token
     user.value = data.user
     
-    // Persist to localStorage
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('user', JSON.stringify(data.user))
-    
     return data
   }
 
@@ -57,6 +74,7 @@ export const useAuthStore = defineStore('auth', () => {
           'Authorization': `Bearer ${token.value}`,
           'Accept': 'application/json',
         },
+        credentials: 'include',
       })
     } catch {
       // Ignore errors on logout
@@ -64,8 +82,6 @@ export const useAuthStore = defineStore('auth', () => {
     
     token.value = null
     user.value = null
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
   }
 
   async function fetchUser() {
@@ -77,6 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
           'Authorization': `Bearer ${token.value}`,
           'Accept': 'application/json',
         },
+        credentials: 'include',
       })
       
       if (!response.ok) {
@@ -85,14 +102,11 @@ export const useAuthStore = defineStore('auth', () => {
       
       const data = await response.json()
       user.value = data.user
-      localStorage.setItem('user', JSON.stringify(data.user))
       return data.user
     } catch {
       // Token invalid, clear auth
       token.value = null
       user.value = null
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
       return null
     }
   }
@@ -101,6 +115,8 @@ export const useAuthStore = defineStore('auth', () => {
     token,
     user,
     isAuthenticated,
+    initialized,
+    initFromSession,
     login,
     logout,
     fetchUser,
