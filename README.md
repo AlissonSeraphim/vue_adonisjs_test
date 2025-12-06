@@ -173,6 +173,18 @@ start/
 
 **Total Backend: ~6h**
 
+### Frontend
+- Desenvolvimento com Vue.js, componentes e gerenciamento de estado: 8 horas
+
+### Docker
+- Configuração de docker-compose para backend, frontend e banco de dados: 2 horas
+
+### Estimativa Total do Projeto
+- Backend: 6 horas
+- Frontend: 8 horas
+- Docker: 2 horas
+- Total: 16 horas
+
 ## Scripts Disponíveis
 
 - `npm run dev` - Servidor de desenvolvimento com HMR
