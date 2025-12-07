@@ -18,6 +18,9 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
+# Install netcat for health checks
+RUN apk add --no-cache netcat-openbsd
+
 # Install only production dependencies
 COPY package*.json ./
 RUN npm ci --omit=dev
@@ -25,9 +28,9 @@ RUN npm ci --omit=dev
 # Copy built application from builder stage
 COPY --from=builder /app/build ./
 
-# Copy entrypoint script
+# Copy entrypoint script and fix line endings
 COPY docker-entrypoint.sh ./
-RUN chmod +x docker-entrypoint.sh
+RUN sed -i 's/\r$//' docker-entrypoint.sh && chmod +x docker-entrypoint.sh
 
 # Expose port
 EXPOSE 3333

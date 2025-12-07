@@ -1,58 +1,77 @@
-# Backend - Fullstack Vue + AdonisJS
+# Incuca Fullstack Test - Vue.js + AdonisJS
 
-API REST desenvolvida com **AdonisJS 6**.
+Aplicação fullstack desenvolvida com **Vue.js 3** (Inertia.js) + **AdonisJS 6** para o teste técnico da Incuca.
 
-## Início Rápido com Docker
+## 🚀 Início Rápido com Docker (Recomendado)
+
+### Pré-requisitos
+- **Docker** e **Docker Compose** instalados
+- Porta **3333** disponível
+
+### Executar o Projeto
 
 ```bash
-# Subir todo o sistema (PostgreSQL + Backend + Frontend)
-docker-compose up -d
+# 1. Clonar o repositório
+git clone <url-do-repositorio>
+cd vue_adonisjs_test
 
-# Acessar a aplicação
+# 2. Subir todo o sistema (PostgreSQL + Aplicação)
+docker compose up -d
+
+# 3. Aguardar inicialização (migrations e seeders são executados automaticamente)
+docker compose logs -f app
+
+# 4. Acessar a aplicação
 # http://localhost:3333
 ```
 
-Pronto! O sistema estará disponível em `http://localhost:3333` com:
-- Banco de dados PostgreSQL configurado
-- Migrations executadas automaticamente
-- Usuário inicial criado via seeder
+**Pronto!** O sistema estará disponível em `http://localhost:3333` com:
+- ✅ Banco de dados PostgreSQL configurado
+- ✅ Migrations executadas automaticamente
+- ✅ Usuário inicial criado via seeder
 
-## Tecnologias
+### Credenciais de Acesso
 
-- **AdonisJS 6** - Framework Node.js
-- **PostgreSQL** - Banco de dados
-- **Lucid ORM** - ORM para banco de dados
-- **Access Tokens** - Autenticação JWT-like
-- **VineJS** - Validação de dados
+- **Email:** `cliente@incuca.com.br`
+- **Senha:** `seumamesapossuirtrespernaschamadasqualidadeprecobaixoevelocidadeelaseriacapenga`
 
-## Requisitos
+---
 
-- Node.js 20+
-- PostgreSQL 14+
+## 🛠️ Desenvolvimento Local (Sem Docker)
 
-## Instalação
+### Pré-requisitos
+- **Node.js 20+**
+- **PostgreSQL 14+** rodando localmente
+
+### Instalação
 
 ```bash
-# Instalar dependências
+# 1. Instalar dependências
 npm install
 
-# Copiar arquivo de ambiente
+# 2. Copiar arquivo de ambiente
 cp .env.example .env
 
-# Gerar APP_KEY
+# 3. Gerar APP_KEY
 node ace generate:key
 
-# Criar banco de dados PostgreSQL
-# psql -U postgres -c "CREATE DATABASE incuca_test;"
+# 4. Configurar banco de dados no .env
+# Edite DB_HOST, DB_USER, DB_PASSWORD conforme seu PostgreSQL local
 
-# Executar migrations
+# 5. Criar banco de dados PostgreSQL
+psql -U postgres -c "CREATE DATABASE incuca_test;"
+
+# 6. Executar migrations
 node ace migration:run
 
-# Executar seeder (cria usuário inicial)
+# 7. Executar seeder (cria usuário inicial)
 node ace db:seed
+
+# 8. Iniciar servidor de desenvolvimento
+npm run dev
 ```
 
-## Configuração do Banco de Dados
+### Configuração do Banco de Dados
 
 Edite o arquivo `.env` com suas credenciais PostgreSQL:
 
@@ -64,18 +83,28 @@ DB_PASSWORD=sua_senha
 DB_DATABASE=incuca_test
 ```
 
-## Executar
+---
 
-```bash
-# Modo desenvolvimento
-npm run dev
+## 📦 Tecnologias Utilizadas
 
-# Build para produção
-npm run build
+### Frontend
+- **Vue.js 3** - Framework JavaScript reativo
+- **Inertia.js** - SPA sem API separada
+- **Pinia** - Gerenciamento de estado
+- **TailwindCSS** - Estilização
+- **Vite** - Build tool
 
-# Executar produção
-npm start
-```
+### Backend
+- **AdonisJS 6** - Framework Node.js
+- **PostgreSQL** - Banco de dados
+- **Lucid ORM** - ORM para banco de dados
+- **Access Tokens** - Autenticação JWT-like
+- **VineJS** - Validação de dados
+
+### DevOps
+- **Docker** - Containerização
+- **Docker Compose** - Orquestração
+- **ESLint** - Análise estática de código
 
 ## Endpoints da API
 
@@ -161,29 +190,45 @@ start/
 └── kernel.ts                 # Middlewares globais
 ```
 
-## Estimativa de Implementação
+## ⏱️ Estimativa de Implementação
 
-### Backend (este projeto)
-- Configuração inicial: 1h
-- Modelo User e migrations: 1h
-- Autenticação JWT: 2h
-- Controller de piadas: 0.5h
-- Rotas e middlewares: 0.5h
-- Testes e ajustes: 1h
+### Cumprimento dos Requisitos
 
-**Total Backend: ~6h**
+| Tarefa | Horas |
+|--------|-------|
+| Configuração inicial do projeto (AdonisJS + Vue.js + Inertia) | 1h |
+| Modelo User, migrations e seeders | 1h |
+| Autenticação JWT (login, logout, persistência de sessão) | 2h |
+| Telas de login com validação (email + senha 8 chars) | 1.5h |
+| Fluxo de humor (inicial → triste → poker-face → feliz) | 2h |
+| Integração com Geek Joke API (backend proxy) | 0.5h |
+| Modal de piadas com lógica de fechamento | 1h |
+| Gerenciamento de estado com Pinia | 1h |
+| Estilização e UX | 2h |
+| Docker e docker-compose | 2h |
+| Testes e ajustes finais | 2h |
 
-### Frontend
-- Desenvolvimento com Vue.js, componentes e gerenciamento de estado: 8 horas
+**Total Requisitos: ~16h**
 
-### Docker
-- Configuração de docker-compose para backend, frontend e banco de dados: 2 horas
+### Evoluções Extras
 
-### Estimativa Total do Projeto
-- Backend: 6 horas
-- Frontend: 8 horas
-- Docker: 2 horas
-- Total: 16 horas
+| Tarefa | Horas |
+|--------|-------|
+| Animações e transições de humor | 1h |
+| Responsividade mobile | 1h |
+| Documentação detalhada | 1h |
+
+**Total Extras: ~3h**
+
+### Resumo
+
+| Categoria | Horas |
+|-----------|-------|
+| Backend (AdonisJS) | 6h |
+| Frontend (Vue.js + Inertia) | 8h |
+| Docker/DevOps | 2h |
+| Extras | 3h |
+| **Total Geral** | **19h** |
 
 ## Scripts Disponíveis
 
@@ -195,7 +240,7 @@ start/
 - `npm run typecheck` - Verificar tipos TypeScript
 - `npm test` - Executar testes
 
-## Docker
+## 🐳 Docker
 
 ### Arquivos Docker
 
@@ -203,33 +248,103 @@ start/
 |---------|-----------|
 | `Dockerfile` | Multi-stage build para produção |
 | `docker-compose.yml` | Orquestração de containers |
-| `docker-entrypoint.sh` | Script de inicialização |
+| `docker-entrypoint.sh` | Script de inicialização (migrations + seeders + start) |
 | `.dockerignore` | Arquivos ignorados no build |
 
 ### Comandos Docker
 
 ```bash
-# Subir containers
-docker-compose up -d
+# Subir containers (primeira vez ou após alterações)
+docker compose up -d
 
-# Ver logs
-docker-compose logs -f app
+# Ver logs em tempo real
+docker compose logs -f app
 
 # Parar containers
-docker-compose down
+docker compose down
 
-# Rebuild após alterações
-docker-compose build --no-cache
-docker-compose up -d
+# Rebuild após alterações no código
+docker compose build --no-cache app
+docker compose up -d
 
 # Limpar volumes (apaga dados do banco)
-docker-compose down -v
+docker compose down -v
+
+# Executar comandos dentro do container
+docker compose exec app node ace migration:status
 ```
 
-### Variáveis de Ambiente no Docker
+### Portas Expostas
 
-As variáveis são configuradas no `docker-compose.yml`. Para produção, crie um arquivo `.env` na raiz:
+| Serviço | Porta | Descrição |
+|---------|-------|-----------|
+| Aplicação | 3333 | Frontend + Backend (Inertia.js) |
+| PostgreSQL | 5432 | Banco de dados (apenas para debug) |
 
-```env
-APP_KEY=sua_chave_secreta_aqui
+---
+
+## 🎭 Funcionalidades da Aplicação
+
+### Fluxo de Humor
+
+1. **Login** - Tela inicial com validação de email e senha (mínimo 8 caracteres)
+2. **Inicial** (`/inicial`) - Humor neutro 😐
+3. **Triste** (`/triste`) - Primeiro clique leva para 100% triste 😢
+4. **Poker Face** (`/poker-face`) - Clique abre modal com piada da Geek Joke API
+5. **Feliz** (`/feliz`) - Após ler piadas suficientes, humor melhora 😊
+6. **Fechamento** - Modal só fecha quando 100% feliz, volta para `/inicial`
+
+### Autenticação
+
+- Login via JWT (Access Tokens)
+- Token persistido na sessão (recarregar não exige novo login)
+- Logout disponível
+
+---
+
+## 📋 Requisitos Atendidos
+
+- [x] Vue.js com componentes de interface gráfica
+- [x] Gerenciamento de estado no cliente (Pinia)
+- [x] Análise estática de código (ESLint)
+- [x] API REST (AdonisJS)
+- [x] Autenticação com JWT no backend
+- [x] Migrações para criação de tabelas e inserção de dados
+- [x] Estimativa de implementação em horas
+- [x] README.md explicando a solução
+- [x] Docker (rodar `docker compose up` é suficiente)
+
+---
+
+## 🔧 Troubleshooting
+
+### Container não inicia
+
+```bash
+# Verificar logs
+docker compose logs app
+
+# Rebuild completo
+docker compose down -v
+docker compose build --no-cache
+docker compose up -d
+```
+
+### Erro de conexão com banco de dados
+
+```bash
+# Verificar se PostgreSQL está rodando
+docker compose ps
+
+# Verificar health do PostgreSQL
+docker compose logs postgres
+```
+
+### Porta 3333 em uso
+
+```bash
+# Windows: encontrar processo usando a porta
+netstat -ano | findstr :3333
+
+# Parar o processo ou alterar a porta no docker-compose.yml
 ```
