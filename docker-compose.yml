@@ -32,7 +32,7 @@ services:
       NODE_ENV: production
       HOST: 0.0.0.0
       PORT: 3333
-      APP_KEY: ${APP_KEY:-zKXHe-Ahdb7aPK1ylAJlRgTefktEaACi}
+      APP_KEY: ${APP_KEY:-zKXHe-Ahdb7aPK1ylAJlRgTefktEaACi} #deixado exposto para fins de teste (não replicavel em produção)
       LOG_LEVEL: info
       SESSION_DRIVER: cookie
       DB_HOST: postgres
